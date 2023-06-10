@@ -3,12 +3,13 @@ model:
   target: src.models.ddpm_conditioned.ConditionDDPM #models.ddpm_st_diffusion.DDPM
   params:
     dataset:
-      target: src.diffusion_modules.diffusion_utils.dataloader.load_task1_brain
+      target: src.diffusion_modules.diffusion_utils.dataloader.load_task2_brain
       params:
         anatomy: brain
-        data_dir: /home/akshay/Documents/cse_sem_6/synthrad2023/algorithm-template/data/Task1
+        data_dir: /home/akshay/Documents/cse_sem_6/synthrad2023/algorithm-template/data/Task2
         image_size: &IMG_SIZE 64
         num_of_samples: 5
+        rescale: True # 0 to 255
         
     linear_start: 0.0001
     linear_end: 0.02

@@ -90,6 +90,24 @@ def load_StanfordCars(image_size, channels):
                                          transform=noisy_data_transform, split='test')    
     return train, val, noisy_train, noisy_val #torch.utils.data.ConcatDataset([train, test]) #test and train set merged
 
+def load_task1_brain(data_dir, anatomy, image_size, num_of_samples):
+    from src.diffusion_modules.diffusion_utils.dataloaderSITK import PrepareData, CreateDataset
+    # data_dir = "/home/akshay/Documents/cse_sem_6/synthrad2023/algorithm-template/data/Task1"  # Specify the directory containing the patient folders
+    anatomy = "brain"
+    max_size = 284 if anatomy=="brain" else 586
+    brain_data = PrepareData(data_dir,anatomy=anatomy,max_size=max_size,trim_x_slices=0.15,num=num_of_samples)
+    brain_dataset = CreateDataset( brain_data, phase="train", image_size=image_size, lr_flip=0.5)
+    return brain_dataset
+
+def load_task2_brain(data_dir, anatomy, image_size, num_of_samples, rescale):
+    from src.diffusion_modules.diffusion_utils.dataloaderSITK_T2 import PrepareData, CreateDataset
+    # data_dir = "/home/akshay/Documents/cse_sem_6/synthrad2023/algorithm-template/data/Task1"  # Specify the directory containing the patient folders
+    anatomy = "brain"
+    max_size = 298 if anatomy=="brain" else 586
+    brain_data = PrepareData(data_dir,anatomy=anatomy,max_size=max_size,trim_x_slices=0.15,num=num_of_samples)
+    brain_dataset = CreateDataset( brain_data, phase="train", image_size=image_size, rescale=rescale, lr_flip=0.5)
+    return brain_dataset
+
 def load_t1_brain(data_dir):
     transform = transforms.Compose([
         transforms.Resize((32, 32)),  # Resize the images to a specific size
